@@ -12,7 +12,7 @@ def generate_launch_description():
             'out_pose_topic', default_value='/map_pose'),
         DeclareLaunchArgument(
             'out_file',
-            default_value='/home/cc/chg_ws/ros_ws/semantic_map_coda_ws/src/dsp_global_mapping/data/result.ply'),
+            default_value='/home/didar/168robotics_ws/src/dsp_global_mapping/data/result.ply'),
         DeclareLaunchArgument(
             'map_range_x', default_value='38.4'),
         DeclareLaunchArgument(
@@ -25,7 +25,7 @@ def generate_launch_description():
             'write_color', default_value='1'),
         DeclareLaunchArgument(
             'object_csv',
-            default_value='/home/cc/chg_ws/ros_ws/semantic_map_coda_ws/src/dsp_global_mapping/cfg/object_info_kitti360.csv'),
+            default_value='/home/didar/168robotics_ws/src/dsp_global_mapping/cfg/object_info_kitti360.csv'),
 
         Node(
             package='dsp_global_mapping',

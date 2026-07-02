@@ -19,7 +19,7 @@
 
 #define VERBOSE_MODE 1 ///< 0: no verbose, 1: verbose: show more output information
 
-#define SETTING 3 ///<0: KITTI_360, 1:CODA, 2:VIRTUAL_KITTI2, 3:ZED2
+#define SETTING 4 ///<0: KITTI_360, 1:CODA, 2:VIRTUAL_KITTI2, 3:ZED2, 4: front_camera of 168robotics robot.
 
 
 #if SETTING == 3 ///< ZED2 MODE. USE BOOST MODE
@@ -117,6 +117,31 @@
 
     constexpr float g_depth_range_min = 0.3f; ///< Depth range min. Unit: meter
     constexpr float g_depth_range_max = 15.f; ///< Depth range max. Unit: meter. Usually we suppose the depth range is big than the max visiable depth of the map, i.e., every point in the map is visiable unless there is occlusion. Make the map smaller if you want to use a smaller depth range.
+
+
+#elif SETTING == 4  ///< front_camera of 168robotics robot + LIDAR 
+    constexpr uint8_t C_VOXEL_NUM_AXIS_X_N = 7;  // 2^7 = 128 voxels * 0.05m = 6.4m
+    constexpr uint8_t C_VOXEL_NUM_AXIS_Y_N = 7;  // 6.4m in Y
+    constexpr uint8_t C_VOXEL_NUM_AXIS_Z_N = 6;  // 2^6 = 64 voxels * 0.05m = 3.2m height
+    // X(7) + Y(7) + Z(6) + particle(3) = 23 ≤ 31 ✅ constraint satisfied
+
+    constexpr uint8_t C_MAX_PARTICLE_NUM_PER_VOXEL_N = 3;
+    constexpr float C_VOXEL_SIZE = 0.05f;  // 5 cm cells as required
+
+    // From /cam/front/camera_info P matrix (rectified intrinsics)
+    constexpr float g_camera_fx_set = 516.9271402796466f;
+    constexpr float g_camera_fy_set = 516.9271402796466f;
+    constexpr float g_camera_cx_set = 611.541205740157f;
+    constexpr float g_camera_cy_set = 328.2243027445102f;
+
+    constexpr int g_image_width_set  = 1200;
+    constexpr int g_image_height_set = 600;
+
+    constexpr bool g_consider_instance = true;
+
+    constexpr float g_depth_range_min = 0.3f;
+    constexpr float g_depth_range_max = 20.0f;  // lidar range
+
 
 #else
     #error "Please define the SETTING macro to one of the supported parameters or add your own parameters."

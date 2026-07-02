@@ -2,11 +2,11 @@ import open3d as o3d
 import numpy as np
 
 # Load the point cloud from the ply file
-ply_file = "/home/cc/chg_ws/ros_ws/semantic_map_coda_ws/src/dsp_global_mapping/data/test_to_upload_higher_res/resampled_0-1/test_0.ply"
+ply_file = "/home/didar/168robotics_ws/src/dsp_global_mapping/data/test_to_upload_higher_res/resampled_0-1/test_0.ply"
 point_cloud = o3d.io.read_point_cloud(ply_file, format='ply')
 
 # Load the labels from the txt file
-label_file = "/home/cc/chg_ws/ros_ws/semantic_map_coda_ws/src/dsp_global_mapping/data/test_to_upload_higher_res/resampled_0-1/test_semantic_0.txt"
+label_file = "/home/didar/168robotics_ws/src/dsp_global_mapping/data/test_to_upload_higher_res/resampled_0-1/test_semantic_0.txt"
 labels = np.loadtxt(label_file, dtype=int)
 
 # Define the color map for labels

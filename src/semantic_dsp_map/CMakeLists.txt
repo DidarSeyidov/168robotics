@@ -64,12 +64,6 @@ install(TARGETS mapping
   DESTINATION lib/${PROJECT_NAME}
 )
 
-install(PROGRAMS
-  script/tools/odom_to_pose.py
-  script/tools/lidar_to_depth.py
-  script/tools/dummy_mask_publisher.py
-  DESTINATION lib/${PROJECT_NAME}
-)
 
 install(DIRECTORY launch/
   DESTINATION share/${PROJECT_NAME}/launch
@@ -81,6 +75,13 @@ install(DIRECTORY cfg/
 
 install(DIRECTORY rviz/
   DESTINATION share/${PROJECT_NAME}/rviz
+)
+
+install(PROGRAMS
+  script/168robotics_related_scripts/lidar_to_depth.py
+  script/168robotics_related_scripts/camera_pose_publisher.py
+  script/168robotics_related_scripts/superpoint_frontend.py
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 ament_package()

@@ -27,7 +27,7 @@ def generate_launch_description():
         'lidar_topic', default_value='/lidar/merged/points')
     output_file_arg = DeclareLaunchArgument(
         'output_file',
-        default_value='/home/didar/semantic_map_ws/output/global_map.ply',
+        default_value='/home/didar/168robotics_ws/output/global_map.ply',
         description='Output PLY file path')
     map_x_arg   = DeclareLaunchArgument('map_range_x', default_value='200.0')
     map_y_arg   = DeclareLaunchArgument('map_range_y', default_value='200.0')

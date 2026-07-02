@@ -1,0 +1,7 @@
+label_id,label,instance_id(-1 means not fixed),color_b,color_g,color_r
+0,Background,65535,0,0,0
+1,unknown,65535,128,128,128
+2,free,65535,255,255,255
+3,static,65535,0,0,255
+4,grass,65535,0,255,0
+5,dynamic,-1,0,0,255

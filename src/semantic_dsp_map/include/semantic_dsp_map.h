@@ -1351,7 +1351,7 @@ private:
                 }
 
                 occupied_point_cloud->points.push_back(pt);
-            }else if(get_freespace && occ_result_this_voxel == 0){
+            } /**  else if(get_freespace && occ_result_this_voxel == 0){
                 Eigen::Vector3f voxel_pos;
                 op_mt_.getVoxelGlobalPosition(i, voxel_pos);
 
@@ -1373,7 +1373,48 @@ private:
                 pt.b = 0;
 
                 freespace_point_cloud->points.push_back(pt);
-            }
+            }    **/
+
+            else if(get_freespace && occ_result_this_voxel == 0){
+    Eigen::Vector3f voxel_pos;
+    op_mt_.getVoxelGlobalPosition(i, voxel_pos);
+
+    pcl::PointXYZRGB pt;
+
+    if(visualize_with_zero_center_){
+        pt.x = voxel_pos.x() - camera_position.x();
+        pt.y = voxel_pos.y() - camera_position.y();
+        pt.z = voxel_pos.z() - camera_position.z();
+    }else{
+        pt.x = voxel_pos.x();
+        pt.y = voxel_pos.y();
+        pt.z = voxel_pos.z();
+    }
+
+    // ── GRASS PATCH ──────────────────────────────────────────────
+    // Grass is geometrically free (lidar passes through flat ground,
+    // no depth return → no particles → occ_result == 0) but must be
+    // treated as occupied per your 5-class spec (class 4).
+    // Redirect grass voxels from freespace cloud to occupied cloud.
+    static int grass_label_id = g_label_id_map_default.count("grass") ?
+        g_label_id_map_default.at("grass") : -1;
+
+    if(grass_label_id >= 0 && label_id == static_cast<uint8_t>(grass_label_id)){
+        cv::Vec3b color = g_label_color_map_default[grass_label_id];
+        pt.r = color[2];  // color_map stores BGR, PointXYZRGB needs RGB
+        pt.g = color[1];
+        pt.b = color[0];
+        occupied_point_cloud->points.push_back(pt);
+        continue;  // ← skip freespace push below
+    }
+    // ── END GRASS PATCH ──────────────────────────────────────────
+
+    pt.r = 0;
+    pt.g = 255;
+    pt.b = 0;
+
+    freespace_point_cloud->points.push_back(pt);
+}
 
         }
 
